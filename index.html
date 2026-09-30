@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GTA VI Countdown</title>
+  <style>
+    :root{
+      --pink:#ff4fd8;
+      --purple:#8a3dff;
+      --violet:#c05cff;
+      --white:#ffffff;
+      --shadow1: 0 0 8px rgba(255,79,216,.85);
+      --shadow2: 0 0 18px rgba(138,61,255,.75);
+      --shadow3: 0 0 32px rgba(192,92,255,.45);
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .wrap{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:10px;
+      padding:16px 22px;
+      border-radius:20px;
+      background: rgba(20, 5, 35, 0.18);
+      backdrop-filter: blur(4px);
+    }
+
+    .title{
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: var(--pink);
+      text-transform: uppercase;
+      text-shadow: var(--shadow1), var(--shadow2);
+    }
+
+    .countdown{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
+    .unit{
+      min-width: 110px;
+      padding: 10px 12px;
+      border-radius: 18px;
+      text-align:center;
+      background: linear-gradient(180deg, rgba(255,79,216,0.16), rgba(138,61,255,0.18));
+      border: 2px solid rgba(255,255,255,0.18);
+      box-shadow: var(--shadow1), var(--shadow2), inset 0 0 15px rgba(255,255,255,.08);
+    }
+
+    .number{
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--white);
+      text-shadow: 0 0 10px rgba(255,255,255,.55), var(--shadow1), var(--shadow2), var(--shadow3);
+    }
+
+    .label{
+      margin-top: 6px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: #ffd8fb;
+      text-transform: uppercase;
+      text-shadow: 0 0 8px rgba(255,79,216,.7);
+    }
+
+    .footer{
+      font-size: 14px;
+      color:#f4d7ff;
+      text-shadow: 0 0 6px rgba(255,79,216,.6);
+      letter-spacing: .8px;
+    }
+
+    .done{
+      font-size: 38px;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: var(--shadow1), var(--shadow2), var(--shadow3);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" id="wrap">
+    <div class="title">GTA VI Launch</div>
+
+    <div class="countdown" id="countdown">
+      <div class="unit">
+        <div class="number" id="days">00</div>
+        <div class="label">Days</div>
+      </div>
+      <div class="unit">
+        <div class="number" id="hours">00</div>
+        <div class="label">Hours</div>
+      </div>
+      <div class="unit">
+        <div class="number" id="minutes">00</div>
+        <div class="label">Minutes</div>
+      </div>
+      <div class="unit">
+        <div class="number" id="seconds">00</div>
+        <div class="label">Seconds</div>
+      </div>
+    </div>
+
+  <script>
+    // ==========================
+    // CHANGE THIS DATE/TIME
+    // ==========================
+    // Example: UK midnight launch
+    const targetDate = new Date("2026-11-18T00:00:00+00:00").getTime();
+
+    // Example if you want New Zealand early unlock instead, use:
+    // const targetDate = new Date("2026-11-18T00:00:00+13:00").getTime();
+
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+    const countdownEl = document.getElementById("countdown");
+    const wrapEl = document.getElementById("wrap");
+
+    function pad(n) {
+      return String(n).padStart(2, "0");
+    }
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        countdownEl.innerHTML = '<div class="done">GTA VI IS LIVE</div>';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      daysEl.textContent = pad(days);
+      hoursEl.textContent = pad(hours);
+      minutesEl.textContent = pad(minutes);
+      secondsEl.textContent = pad(seconds);
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
